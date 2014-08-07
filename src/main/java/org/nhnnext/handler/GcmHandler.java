@@ -1,33 +1,61 @@
 package org.nhnnext.handler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ning.http.client.AsyncCompletionHandler;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.Response;
 import org.vertx.java.core.Handler;
+import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.http.HttpServerRequest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.vertx.java.core.http.HttpServerResponse;
+import org.vertx.java.core.logging.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.concurrent.Future;
 
 public class GcmHandler implements Handler<HttpServerRequest> {
+    private static final String GCM_URL = "https://android.googleapis.com/gcm/send";
+    private static final String AUTH_KEY = "key=AIzaSyCSXLo9AP5tFKGGGSZ7GXst8_PWCKlKN_k";
+
+    private final Logger logger;
+
+    public GcmHandler(Logger logger) {
+        this.logger = logger;
+    }
+
     @Override
     public void handle(HttpServerRequest httpServerRequest) {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("result", "pine");
-        map.put("message", "");
+        final HttpServerResponse httpServerResponse = httpServerRequest.response();
 
-        HttpServerResponse response = httpServerRequest.response();
-        response.setStatusCode(200);
-
-        String json = null;
         try {
-            json = mapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+            httpServerRequest.bodyHandler(new Handler<Buffer>() {
+                @Override
+                public void handle(Buffer event) {
+                    String body = event.toString();
 
-        httpServerRequest.response().end(json);
+                    AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+                    try {
+                        Future<Response> future = asyncHttpClient.preparePost(GCM_URL)
+                                .setHeader("Content-Type", "application/json")
+                                .setHeader("Authorization", AUTH_KEY)
+                                .setBody(body)
+                                .execute(new AsyncCompletionHandler<Response>() {
+                            @Override
+                            public Response onCompleted(Response response) throws Exception {
+//                                logger.info(response.getResponseBody());
+                                httpServerRequest.response().end("end");
+                                return null;
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        httpServerRequest.response().setStatusCode(400).end("error");
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpServerRequest.response().setStatusCode(400).end("error");
+        }
     }
 }
