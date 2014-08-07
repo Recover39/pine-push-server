@@ -27,7 +27,7 @@ import org.vertx.java.platform.Verticle;
 
 public class MainVerticle extends Verticle {
     private static final int port = 8000;
-    private static final String hostname = "127.0.0.1";
+    private static final String hostname = "0.0.0.0";
 
     public void start() {
         final Logger logger = container.logger();
