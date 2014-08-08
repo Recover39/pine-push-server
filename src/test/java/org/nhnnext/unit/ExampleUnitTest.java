@@ -24,8 +24,6 @@ public class ExampleUnitTest {
 
   @Test
   public void testVerticle() {
-    MainVerticle vert = new MainVerticle();
-
     // do something with verticle
   }
 }
