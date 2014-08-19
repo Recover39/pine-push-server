@@ -14,7 +14,7 @@ import org.vertx.java.core.logging.Logger;
 public class ApnsHandler implements Handler<HttpServerRequest> {
     private final Logger logger;
 
-    private static final String certificate = "/Users/nhk/Documents/TestCert.p12";
+    private static final String certificate = "/home/next/TestCert.p12";
 
     private static ApnsService apnsService;
 
@@ -46,7 +46,7 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
                 @Override
                 public void handle(Buffer event) {
                     String body = event.toString();
-                    logger.info(body);
+
                     JsonObject jsonObject = new JsonObject(body);
 
                     String token = jsonObject.getString("token");
@@ -67,9 +67,7 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
                 }
             });
         } catch (Exception e) {
-            logger.info("hello?!");
             logger.info(e);
-            e.printStackTrace();
             httpServerRequest.response().setStatusCode(400).end("error");
         }
     }
