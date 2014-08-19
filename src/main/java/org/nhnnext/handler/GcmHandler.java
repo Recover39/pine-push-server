@@ -24,7 +24,7 @@ public class GcmHandler implements Handler<HttpServerRequest> {
     }
 
     @Override
-    public void handle(HttpServerRequest httpServerRequest) {
+    public void handle(final HttpServerRequest httpServerRequest) {
         final HttpServerResponse httpServerResponse = httpServerRequest.response();
 
         try {
@@ -43,13 +43,13 @@ public class GcmHandler implements Handler<HttpServerRequest> {
                             @Override
                             public Response onCompleted(Response response) throws Exception {
 //                                logger.info(response.getResponseBody());
-                                httpServerRequest.response().end("end");
+                                httpServerRequest.response().end("success");
                                 return null;
                             }
                         });
                     } catch (IOException e) {
-                        e.printStackTrace();
-                        httpServerRequest.response().setStatusCode(400).end("error");
+                        logger.error(e.toString());
+                        httpServerRequest.response().setStatusCode(400).end(e.toString());
                     }
                 }
             });

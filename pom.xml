@@ -71,7 +71,7 @@
       <groupId>io.vertx</groupId>
       <artifactId>vertx-platform</artifactId>
       <version>${vertx.version}</version>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
@@ -119,6 +119,13 @@
       <groupId>com.ning</groupId>
       <artifactId>async-http-client</artifactId>
       <version>1.8.13</version>
+    </dependency>
+
+    <!--APNS-->
+    <dependency>
+      <groupId>com.notnoop.apns</groupId>
+      <artifactId>apns</artifactId>
+      <version>0.2.3</version>
     </dependency>
 
   </dependencies>

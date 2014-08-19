@@ -17,6 +17,7 @@ package org.nhnnext;
  * @author <a href="http://tfox.org">Tim Fox</a>
  */
 
+import org.nhnnext.handler.ApnsHandler;
 import org.nhnnext.handler.GcmHandler;
 import org.vertx.java.core.AsyncResult;
 import org.vertx.java.core.AsyncResultHandler;
@@ -35,6 +36,7 @@ public class MainVerticle extends Verticle {
 
         RouteMatcher routeMatcher = new RouteMatcher();
         routeMatcher.post("/push/gcm", new GcmHandler(logger));
+        routeMatcher.post("/push/apns", new ApnsHandler(logger));
         server.requestHandler(routeMatcher);
 
         server.listen(port, hostname, new AsyncResultHandler<HttpServer>() {
