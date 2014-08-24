@@ -51,6 +51,7 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
 
                     String token = jsonObject.getString("token");
                     String alertBody = jsonObject.getString("alert_body");
+                    String imageUrl = jsonObject.getString("image_url");
                     String threadId = "";
                     if (jsonObject.containsField("thread_id"))
                         threadId = String.valueOf(jsonObject.getInteger("thread_id"));
@@ -60,6 +61,7 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
                             .badge(1)
                             .sound("default")
                             .customField("thread_id", threadId)
+                            .customField("image_url", imageUrl)
                             .build();
 
                     ApnsNotification notification = apnsService.push(token, payload);

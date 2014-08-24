@@ -1,9 +1,29 @@
-# Vert.x Example Maven Project
+""" push message protocol
 
-Example project for creating a Vert.x module with a Gradle build.
+    ANDROID push
 
-By default this module contains a simple Java verticle which listens on the event bus and responds to `ping!`
-messages with `pong!`.
+    PUSH_NEW_THREAD = 10
+    PUSH_NEW_COMMENT = 11
 
-This example also shows you how to write tests in Java, Groovy, Ruby and Python
+    PUSH_LIKE_THREAD = 20
+    PUSH_LIKE_COMMENT = 21
 
+    {
+        'push_type': (int),
+        'message': (String),
+        'thread_id': (int),
+        'comment_id': (int),
+        'summary':
+    }
+
+    IOS push
+
+    'aps': {
+        'alert': (message, String),
+        'badge': 1,
+    },
+    'thread_id': (int),         # PUSH_NEW_THREAD : no need, 나머지 전부 줄것
+    'event_date': 'YYYY-mm-dd HH:MM:SS',
+    'image_url': (String)
+
+"""
