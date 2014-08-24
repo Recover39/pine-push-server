@@ -52,19 +52,24 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
                     String token = jsonObject.getString("token");
                     String alertBody = jsonObject.getString("alert_body");
 
-                    String imageUrl="";
-                    if (jsonObject.containsField("image_url"))
-                        imageUrl = jsonObject.getString("image_url");
-
                     String threadId = "";
                     if (jsonObject.containsField("thread_id"))
                         threadId = String.valueOf(jsonObject.getInteger("thread_id"));
+
+                    String eventDate = "";
+                    if (jsonObject.containsField("event_date"))
+                        eventDate = String.valueOf(jsonObject.getString("event_date"));
+
+                    String imageUrl="";
+                    if (jsonObject.containsField("image_url"))
+                        imageUrl = jsonObject.getString("image_url");
 
                     String payload = APNS.newPayload()
                             .alertBody(alertBody)
                             .badge(1)
                             .sound("default")
                             .customField("thread_id", threadId)
+                            .customField("eventDate", eventDate)
                             .customField("image_url", imageUrl)
                             .build();
 
