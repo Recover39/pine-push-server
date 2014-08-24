@@ -51,7 +51,11 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
 
                     String token = jsonObject.getString("token");
                     String alertBody = jsonObject.getString("alert_body");
-                    String imageUrl = jsonObject.getString("image_url");
+
+                    String imageUrl="";
+                    if (jsonObject.containsField("image_url"))
+                        imageUrl = jsonObject.getString("image_url");
+
                     String threadId = "";
                     if (jsonObject.containsField("thread_id"))
                         threadId = String.valueOf(jsonObject.getInteger("thread_id"));
