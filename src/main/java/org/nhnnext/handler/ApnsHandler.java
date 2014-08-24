@@ -69,7 +69,7 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
                             .badge(1)
                             .sound("default")
                             .customField("thread_id", threadId)
-                            .customField("eventDate", eventDate)
+                            .customField("event_date", eventDate)
                             .customField("image_url", imageUrl)
                             .build();
 
