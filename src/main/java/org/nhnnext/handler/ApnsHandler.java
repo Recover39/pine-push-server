@@ -46,6 +46,7 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
                 @Override
                 public void handle(Buffer event) {
                     String body = event.toString();
+                    logger.info("APNS: " + body);
 
                     JsonObject jsonObject = new JsonObject(body);
 
@@ -78,7 +79,7 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
                 }
             });
         } catch (Exception e) {
-            logger.info(e);
+            logger.error(e);
             httpServerRequest.response().setStatusCode(400).end("error");
         }
     }

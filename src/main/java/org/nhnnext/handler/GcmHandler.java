@@ -32,6 +32,7 @@ public class GcmHandler implements Handler<HttpServerRequest> {
                 @Override
                 public void handle(Buffer event) {
                     String body = event.toString();
+                    logger.info("GCM: " + body);
 
                     AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
                     try {
@@ -54,7 +55,7 @@ public class GcmHandler implements Handler<HttpServerRequest> {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
             httpServerRequest.response().setStatusCode(400).end("error");
         }
     }
