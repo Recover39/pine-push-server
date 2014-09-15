@@ -22,7 +22,7 @@ public class ApnsHandler implements Handler<HttpServerRequest> {
         apnsService = APNS.newService()
                 .withCert(certificate, "Shltlsrud11rowjfeks^^")
                 .withSandboxDestination()
-                .asPool(2)
+//                .asPool(2)
                 .build();
     }
 
