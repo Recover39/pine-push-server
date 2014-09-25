@@ -14,14 +14,15 @@ import org.vertx.java.core.logging.Logger;
 public class ApnsHandler implements Handler<HttpServerRequest> {
     private final Logger logger;
 
-    private static final String certificate = "/home/next/VeilCertificates.p12";
+    private static final String certificate = "/home/next/VeilBetaCert.p12";
 
     private static ApnsService apnsService;
 
     static {
         apnsService = APNS.newService()
                 .withCert(certificate, "Shltlsrud11rowjfeks^^")
-                .withSandboxDestination()
+                .withProductionDestination()
+//                .withSandboxDestination()
 //                .asPool(2)
                 .build();
     }
